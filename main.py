@@ -10,8 +10,13 @@ from star import Star
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load('sounds/myheadisempty.mp3')
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(start=0)
+
 def main():
-    pygame.init()
     clock = pygame.time.Clock()
     dt = 0
     print('Starting asteroids!')
@@ -32,9 +37,11 @@ def main():
     Star.containers = (updatableGroup, drawableGroup)
     #create objects
     field = AsteroidField()
-    ship = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    ship = Player(SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2.5) + (SCREEN_HEIGHT / 2))
+    ship.rotation = 180
     gamelogic = Logic()
     background = Bg()
+    
     while(True):
         if gamelogic.restart == True:
             return restart(gamelogic)

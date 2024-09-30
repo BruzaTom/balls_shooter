@@ -23,4 +23,7 @@ class Logic(CircleShape):
             screen.blit(self.goi, (screen.get_width() / 2 - self.goi.get_width() / 2, 
                                    screen.get_height() / 2 - self.goi.get_height() / 2))
     def update(self, dt):
-        pass
+        if self.gameover:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                self.restart = True
