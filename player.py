@@ -42,7 +42,6 @@ class Player(CircleShape):
         rotated_image = pygame.transform.rotate(self.image, -self.rotation)
         new_rect = rotated_image.get_rect(center=self.position)
         screen.blit(rotated_image, new_rect.topleft)
-        #pygame.draw.polygon(screen, "white", self.triangle(), width=2)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
