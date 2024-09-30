@@ -25,5 +25,5 @@ class Logic(CircleShape):
     def update(self, dt):
         if self.gameover:
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_r]:
                 self.restart = True

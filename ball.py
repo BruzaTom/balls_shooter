@@ -14,6 +14,7 @@ class Ball(CircleShape2):
         self.gravity = GRAVITY
         self.width = self.radius
         self.timer = 0
+        self.priority = 49
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, self.position, self.radius, width=self.width)
@@ -29,7 +30,7 @@ class Ball(CircleShape2):
         self.position += self.velocity * dt
 
     def bounce(self, balls):
-        #self.pop_effect()
+        self.pop_effect()
         if MAX_BALLS > balls:
             self.split()
         else:
@@ -47,10 +48,11 @@ class Ball(CircleShape2):
     def split(self):
         self.kill()
         for i in range(NEW_BALLS):
-            self.spawn_center()
+            self.spawn_at_position()
 
     def keep_bouncing(self):
         self.safty()
+        self.timer = 0.5
         #self.color = COLORS[random.randint(0,len(COLORS)-1)]
         direction_to_center = (CENTER - self.position).normalize()
         newAngle = random.uniform(-25, 25)
@@ -93,7 +95,7 @@ class Ball(CircleShape2):
         pygame.init()
         pygame.mixer.init()
         pygame.mixer.music.load('sounds/pop_edit.mp3')
-        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.set_volume(1)
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.stop()
         pygame.mixer.music.play(start=0.12)

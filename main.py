@@ -19,7 +19,7 @@ pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load('sounds/myheadisempty.mp3')
 pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play(start=0)
+#pygame.mixer.music.play(start=0)
 
 def main():
     clock = pygame.time.Clock()
@@ -46,14 +46,13 @@ def main():
     Border.containers = (borderGroup, drawableGroup, updatableGroup)
     Ball.containers = (ballGroup, drawableGroup, updatableGroup)
     #create objects
-    #field = AsteroidField()
+    field = AsteroidField()
     ship = Player(SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2.5) + (SCREEN_HEIGHT / 2))
     ship.rotation = 180
     gamelogic = Logic()
     background = Bg()
     #added from ball script
-    border = Border(SCREEN_WIDTH / 2, BORDER_POS_Y)
-    ball = Ball(SCREEN_WIDTH / 2, BORDER_POS_Y)
+    #border = Border(SCREEN_WIDTH / 2, BORDER_POS_Y)
     
     balls = 1
     while(True):
@@ -62,31 +61,31 @@ def main():
         screen.fill('Black')        
         for item in updatableGroup:
             item.update(dt)
-        #for item in sorted(drawableGroup, key = lambda object: object.priority, reverse = True):
-        for item in drawableGroup:
+        for item in sorted(drawableGroup, key = lambda object: object.priority, reverse = True):
+        #for item in drawableGroup:
             item.draw(screen)
+        for item in ballGroup:
+            for shot in shotsGroup:
+                if shot.collisions(item):
+                    shot.kill()
+                    item.bounce(balls)
+                    gamelogic.score += 10
+                    balls += 1
+            if ship.collisions(item):
+                print('Game over!')
+                ship.dead = True
+                gamelogic.gameover = True
+            
         for item in shotsGroup:
             item.draw(screen)
             item.update(dt)
-        #added from balls script
-        for item in borderGroup:
-            for ball in ballGroup:
-                if ball.collisions(item):
-                    ball.timer = 0.5
-                    music_timer = dt * 15
-                    item.timer = dt * 5
-                    item.effect()
-                    ball.bounce(balls)
-                    balls += 1
-                    if not pygame.mixer.music.get_busy():
-                        pygame.mixer.music.play(start=music_pos)
         
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         dt = clock.tick(60) / 1000
-        pygame.display.flip()#dont ever forget
+        pygame.display.update()#dont ever forget
 
 def restart(gamelogic):
     gamelogic.restart = False

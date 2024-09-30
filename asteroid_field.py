@@ -2,18 +2,20 @@ import pygame
 import random
 from asteroids import Asteroid
 from constants import *
+from ball import Ball
+import random
 
 
 class AsteroidField(pygame.sprite.Sprite):
     edges = [
         [
             pygame.Vector2(1, 0),
-            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT),
+            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * (SCREEN_HEIGHT / 3)),
         ],
         [
             pygame.Vector2(-1, 0),
             lambda y: pygame.Vector2(
-                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT
+                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * (SCREEN_HEIGHT / 3)
             ),
         ],
         [
@@ -23,7 +25,7 @@ class AsteroidField(pygame.sprite.Sprite):
         [
             pygame.Vector2(0, -1),
             lambda x: pygame.Vector2(
-                x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
+                x * SCREEN_WIDTH, (SCREEN_HEIGHT / 3) + ASTEROID_MAX_RADIUS
             ),
         ],
     ]
@@ -33,7 +35,7 @@ class AsteroidField(pygame.sprite.Sprite):
         self.spawn_timer = 0.0
 
     def spawn(self, radius, position, velocity, image):
-        asteroid = Asteroid(position.x, position.y, radius, image)
+        asteroid = Ball(position.x, position.y, random.randint(8,20))
         asteroid.velocity = velocity
 
     def update(self, dt):

@@ -14,7 +14,7 @@ class Player(CircleShape):
         self.frame = 0
         self.dead = False
         self.priority = 2
-        self.original_image = pygame.image.load('sprites/space_jet.png').convert_alpha()
+        self.original_image = pygame.image.load('sprites/space_war_rs_f.png').convert_alpha()
         self.image = self.original_image
         self.explo_frames = []
         for i in range(0, 81):

@@ -27,3 +27,11 @@ class CircleShape(pygame.sprite.Sprite):
         if distance <= collisionDistance:
             return True
         return False
+    
+    #for shot hitting ball
+    def collisions2(self, CircleShape2):
+        collisionDistance = self.radius + CircleShape.radius
+        distance = self.position.distance_to(CircleShape2.position)
+        if distance <= collisionDistance:
+            return True
+        return False
